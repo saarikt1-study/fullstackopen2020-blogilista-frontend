@@ -41,6 +41,11 @@ const App = () => {
     }
   }
 
+  const handleLogout = () => {
+    window.localStorage.removeItem('loggedBloglistUser')
+    setUser(null)
+  }
+
   const loginForm = () => (
     <form onSubmit={handleLogin}>
       <div>
@@ -78,6 +83,7 @@ const App = () => {
     <div>
       <h1>List of Blogs</h1>
         <p>{user.name} logged in</p>
+        <button onClick={handleLogout}>logout</button>
         <h2>Blogs</h2>
         {blogs.map(blog =>
           <Blog key={blog.id} blog={blog} />
