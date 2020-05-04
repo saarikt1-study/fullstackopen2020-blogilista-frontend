@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import Blog from './components/Blog'
 import blogService from './services/blogs'
 import loginService from './services/login'
+import Notification from './components/notification'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
@@ -11,6 +12,7 @@ const App = () => {
   const [title, setTitle] = useState('')
   const [author, setAuthor] = useState('')
   const [url, setUrl] = useState('')
+  const [notificationMsg, setNotificationMsg] = useState(null)
 
   useEffect(() => {
     blogService.getAll().then(blogs =>
@@ -42,7 +44,10 @@ const App = () => {
       setUsername('')
       setPassword('')
     } catch (exception) {
-      console.error('wrong credentials')
+      setNotificationMsg('ERROR: Wrong credentials')
+      setTimeout(() => {
+        setNotificationMsg(null)
+      }, 4000)
     }
   }
 
@@ -128,11 +133,17 @@ const App = () => {
     setTitle('')
     setAuthor('')
     setUrl('')
+
+    setNotificationMsg(`${blogObject.title} added!`)
+    setTimeout(() => {
+      setNotificationMsg(null)
+    }, 4000)
   }
   
   if (user === null) {
     return (
       <div>
+        <Notification message={notificationMsg}/>
         <h2>Log in to application</h2>
         { loginForm() }
       </div>
@@ -141,6 +152,7 @@ const App = () => {
   
   return (
     <div>
+      <Notification message={notificationMsg}/>
       <h1>List of Blogs</h1>
         <p>{user.name} logged in</p>
         <button onClick={handleLogout}>logout</button>
