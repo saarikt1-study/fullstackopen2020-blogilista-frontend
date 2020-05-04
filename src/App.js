@@ -23,6 +23,7 @@ const App = () => {
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON)
       setUser(user)
+      blogService.setToken(user.token)
     }
   }, [])
   
@@ -36,6 +37,7 @@ const App = () => {
       window.localStorage.setItem(
         'loggedBloglistUser', JSON.stringify(user)
       )
+      blogService.setToken(user.token)
       setUser(user)
       setUsername('')
       setPassword('')
@@ -112,9 +114,20 @@ const App = () => {
     setUrl(event.target.value)
   }
 
-  const addBlog = (event) => {
+  const addBlog = async (event) => {
     event.preventDefault()
-    console.log('Tried to add a blog')
+
+    const blogObject = {
+      title: title,
+      author: author,
+      url: url
+    }
+
+    const returnedBlog = await blogService.create(blogObject)
+    setBlogs(blogs.concat(returnedBlog))
+    setTitle('')
+    setAuthor('')
+    setUrl('')
   }
   
   if (user === null) {
