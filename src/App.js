@@ -79,13 +79,17 @@ const App = () => {
     </form>      
   )
 
+  const blogFormRef = React.createRef()
+
   const blogForm = () => (
-    <Togglable buttonLabel="New blog">
+    <Togglable buttonLabel="New blog" ref={blogFormRef}>
       <BlogForm createBlog={addBlog} />
     </Togglable>
   )
 
   const addBlog = async (blogObject) => {
+    blogFormRef.current.toggleVisibility()
+
     const returnedBlog = await blogService.create(blogObject)
     setBlogs(blogs.concat(returnedBlog))
 
