@@ -2,16 +2,15 @@ import React, { useState, useEffect } from 'react'
 import Blog from './components/Blog'
 import blogService from './services/blogs'
 import loginService from './services/login'
-import Notification from './components/notification'
+import Notification from './components/Notification'
+import Togglable from './components/Togglable'
+import BlogForm from './components/BlogForm'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
-  const [title, setTitle] = useState('')
-  const [author, setAuthor] = useState('')
-  const [url, setUrl] = useState('')
   const [notificationMsg, setNotificationMsg] = useState(null)
 
   useEffect(() => {
@@ -81,58 +80,14 @@ const App = () => {
   )
 
   const blogForm = () => (
-    <>
-      <h2>Add blogs!</h2>
-      <form onSubmit={addBlog}>
-        Title:
-        <input
-          value={title}
-          onChange={handleTitleChange}
-        />
-        <br />
-        Author:
-        <input
-          value={author}
-          onChange={handleAuthorChange}
-        />
-        <br />
-        Url:
-        <input
-          value={url}
-          onChange={handleUrlChange}
-        />
-        <br />
-        <button type='submit'>create</button>
-      </form>
-    </>
+    <Togglable buttonLabel="New blog">
+      <BlogForm createBlog={addBlog} />
+    </Togglable>
   )
 
-  const handleTitleChange = (event) => {
-    setTitle(event.target.value)
-  }
-
-  const handleAuthorChange = (event) => {
-    setAuthor(event.target.value)
-  }
-  
-  const handleUrlChange = (event) => {
-    setUrl(event.target.value)
-  }
-
-  const addBlog = async (event) => {
-    event.preventDefault()
-
-    const blogObject = {
-      title: title,
-      author: author,
-      url: url
-    }
-
+  const addBlog = async (blogObject) => {
     const returnedBlog = await blogService.create(blogObject)
     setBlogs(blogs.concat(returnedBlog))
-    setTitle('')
-    setAuthor('')
-    setUrl('')
 
     setNotificationMsg(`${blogObject.title} added!`)
     setTimeout(() => {
