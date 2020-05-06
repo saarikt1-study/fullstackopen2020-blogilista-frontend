@@ -11,7 +11,7 @@ const blogStyle = {
   marginRight: 20
 }
 
-const Blog = ({ blog, updateBlog }) => {
+const Blog = ({ blog, updateBlog, deleteBlog, loggedUserId }) => {
   const [visible, setVisibility] = useState(false)
 
   const detailsVisible = { display: visible ? '' : 'none' }
@@ -25,7 +25,11 @@ const Blog = ({ blog, updateBlog }) => {
       likes: blog.likes + 1,
       url: blog.url
     })
-  }  
+  }
+
+  const blogCreatorId = blog.user && blog.user.id
+
+  const createdByLoggedUser = loggedUserId === blogCreatorId
 
   return (
     <div style={blogStyle}>
@@ -38,6 +42,7 @@ const Blog = ({ blog, updateBlog }) => {
         <button onClick={handleClick}>Like</button>
         <br />
         {blog.user && blog.user.name}
+        {createdByLoggedUser && <button onClick={() => deleteBlog(blog.id)}>Delete blog</button>}
       </div>
     </div>
   )
