@@ -16,7 +16,7 @@ const App = () => {
   useEffect(() => {
     blogService.getAll().then(blogs =>
       setBlogs( blogs )
-    )  
+    )
   }, [])
 
   useEffect(() => {
@@ -27,7 +27,7 @@ const App = () => {
       blogService.setToken(user.token)
     }
   }, [])
-  
+
   const handleLogin = async (event) => {
     event.preventDefault()
     try {
@@ -59,7 +59,7 @@ const App = () => {
     <form onSubmit={handleLogin}>
       <div>
         username
-          <input
+        <input
           type="text"
           value={username}
           name="Username"
@@ -68,7 +68,7 @@ const App = () => {
       </div>
       <div>
         password
-          <input
+        <input
           type="password"
           value={password}
           name="Password"
@@ -76,7 +76,7 @@ const App = () => {
         />
       </div>
       <button type="submit">login</button>
-    </form>      
+    </form>
   )
 
   const blogFormRef = React.createRef()
@@ -116,7 +116,7 @@ const App = () => {
       setNotificationMsg(null)
     }, 4000)
   }
-  
+
   if (user === null) {
     return (
       <div>
@@ -126,21 +126,21 @@ const App = () => {
       </div>
     )
   }
-  
+
   return (
     <div>
       <Notification message={notificationMsg}/>
       <h1>List of Blogs</h1>
-        <p>{user.name} logged in</p>
-        <button onClick={handleLogout}>logout</button>
-        { blogForm() }
-        <h2>Blogs</h2>
-        {blogs
-          .sort((a, b) => {
-            return b.likes - a.likes
-          })
-          .map(blog =>
-          <Blog 
+      <p>{user.name} logged in</p>
+      <button onClick={handleLogout}>logout</button>
+      { blogForm() }
+      <h2>Blogs</h2>
+      {blogs
+        .sort((a, b) => {
+          return b.likes - a.likes
+        })
+        .map(blog =>
+          <Blog
             key={blog.id}
             blog={blog}
             updateBlog={updateBlog}
