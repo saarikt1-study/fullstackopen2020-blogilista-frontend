@@ -11,11 +11,21 @@ const blogStyle = {
   marginRight: 20
 }
 
-const Blog = ({ blog }) => {
+const Blog = ({ blog, updateBlog }) => {
   const [visible, setVisibility] = useState(false)
 
   const detailsVisible = { display: visible ? '' : 'none' }
   const buttonLabel = visible ? 'Hide details' : 'View details'
+
+  const handleClick = () => {
+    updateBlog(blog.id, {
+      user: blog.user && blog.user.id,
+      title: blog.title,
+      author: blog.author,
+      likes: blog.likes + 1,
+      url: blog.url
+    })
+  }  
 
   return (
     <div style={blogStyle}>
@@ -25,6 +35,9 @@ const Blog = ({ blog }) => {
         {blog.url}
         <br />
         Likes: {blog.likes}
+        <button onClick={handleClick}>Like</button>
+        <br />
+        {blog.user && blog.user.name}
       </div>
     </div>
   )
