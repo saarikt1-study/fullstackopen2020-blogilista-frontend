@@ -35,7 +35,7 @@ const Blog = ({ blog, updateBlog, deleteBlog, loggedUserId }) => {
     <div style={blogStyle}>
       {blog.title} by {blog.author}
       <button onClick={() => setVisibility(!visible)}>{buttonLabel}</button>
-      <div style={detailsVisible}>
+      <div style={detailsVisible} className='blogDetails'>
         {blog.url}
         <br />
         Likes: {blog.likes}
