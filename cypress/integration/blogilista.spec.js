@@ -39,10 +39,6 @@ describe('Blog app', function() {
   describe.only('When logged in', function() {
     beforeEach(function () {
       cy.login({ username: 'Tsaarika', password: 'tosiSALAinen'})
-      // cy.get('#username').type('Tsaarika')
-      // cy.get('#password').type('tosiSALAinen')
-      // cy.get('#login-button').click()
-  
     })
 
     it('A blog can be created', function() {
@@ -75,6 +71,12 @@ describe('Blog app', function() {
         cy.contains('View details').click()
         cy.contains('Like').click()
         cy.contains('Likes: 1')
+      })
+
+      it('A blog can be deleted by the user who added it', function() {
+        cy.contains('View details').click()
+        cy.contains('Delete blog').click()
+        cy.get('#blog').should('not.exist')
       })
     })
   })

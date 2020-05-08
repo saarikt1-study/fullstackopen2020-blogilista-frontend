@@ -77,7 +77,7 @@ const App = () => {
           onChange={({ target }) => setPassword(target.value)}
         />
       </div>
-      <button id="login-button" type="submit">login</button>
+      <button type="submit">login</button>
     </form>
   )
 
@@ -100,11 +100,11 @@ const App = () => {
 
   const deleteBlog = async (id) => {
     const blog = blogs.find(b => b.id === id)
+    setBlogs(blogs.filter(b => b.id !== id))
 
-    if (window.confirm(`Are you sure you want to delete ${blog.title}?`)) {
-      await blogService.deleteBlog(id)
-      setBlogs(blogs.filter(b => b.id !== id))
-    }
+    // if (window.confirm(`Are you sure you want to delete ${blog.title}?`)) {
+    //   await blogService.deleteBlog(id)
+    // }
   }
 
   const addBlog = async (blogObject) => {

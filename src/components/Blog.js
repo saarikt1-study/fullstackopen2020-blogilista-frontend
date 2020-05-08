@@ -32,7 +32,7 @@ const Blog = ({ blog, updateBlog, deleteBlog, loggedUserId }) => {
   const createdByLoggedUser = loggedUserId === blogCreatorId
 
   return (
-    <div style={blogStyle}>
+    <div id='blog' style={blogStyle}>
       {blog.title} by {blog.author}
       <button onClick={() => setVisibility(!visible)}>{buttonLabel}</button>
       <div style={detailsVisible} className='blogDetails'>
