@@ -19,6 +19,14 @@ describe('Blog app', function() {
   })
 
   describe('login', function() {
+    it('fails with wrong password', function() {
+      cy.get('#username').type('Tsaarika')
+      cy.get('#password').type('wrong')
+      cy.get('#login-button').click()
+  
+      cy.contains('Wrong credentials')
+    })
+
     it('succeeds with correct credentials', function() {
       cy.get('#username').type('Tsaarika')
       cy.get('#password').type('tosiSALAinen')
@@ -26,13 +34,24 @@ describe('Blog app', function() {
   
       cy.contains('Tommi logged in')
     })
+  })
 
-    it('fails with wrong password', function() {
+  describe.only('When logged in', function() {
+    beforeEach(function () {
+      // cy.login({ username: 'Tsaarika', password: 'tosiSALAinen'})
       cy.get('#username').type('Tsaarika')
-      cy.get('#password').type('wrong')
+      cy.get('#password').type('tosiSALAinen')
       cy.get('#login-button').click()
   
-      cy.contains('Wrong credentials')
+    })
+
+    it('A blog can be created', function() {
+      cy.contains('New blog').click()
+      cy.get('#title').type('Cypress title')
+      cy.get('#author').type('Cypress author')
+      cy.get('#url').type('Cypress url')
+      cy.contains('create').click()
+      cy.contains('Cypress title by Cypress author')
     })
   })
 })
