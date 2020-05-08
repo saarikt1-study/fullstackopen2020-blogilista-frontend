@@ -38,10 +38,10 @@ describe('Blog app', function() {
 
   describe.only('When logged in', function() {
     beforeEach(function () {
-      // cy.login({ username: 'Tsaarika', password: 'tosiSALAinen'})
-      cy.get('#username').type('Tsaarika')
-      cy.get('#password').type('tosiSALAinen')
-      cy.get('#login-button').click()
+      cy.login({ username: 'Tsaarika', password: 'tosiSALAinen'})
+      // cy.get('#username').type('Tsaarika')
+      // cy.get('#password').type('tosiSALAinen')
+      // cy.get('#login-button').click()
   
     })
 
@@ -52,6 +52,30 @@ describe('Blog app', function() {
       cy.get('#url').type('Cypress url')
       cy.contains('create').click()
       cy.contains('Cypress title by Cypress author')
+    })
+
+    describe('And a blog exists', function() {
+      beforeEach(function() {
+        cy.request({
+          url: 'http://localhost:3001/api/blogs',
+          method: 'POST',
+          body: {
+            title: 'Another Cypress title',
+            author: 'Another Cypress author',
+            url: 'Another Cypress url'
+          },
+          headers: {
+            'Authorization': `bearer ${JSON.parse(localStorage.getItem('loggedBloglistUser')).token}`
+          }
+        })
+        cy.visit('http://localhost:3000')
+      })
+
+      it('A blog can be liked', function() {
+        cy.contains('View details').click()
+        cy.contains('Like').click()
+        cy.contains('Likes: 1')
+      })
     })
   })
 })
