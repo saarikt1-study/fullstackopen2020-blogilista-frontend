@@ -52,25 +52,18 @@ describe('Blog app', function() {
 
     describe('And a blog exists', function() {
       beforeEach(function() {
-        cy.request({
-          url: 'http://localhost:3001/api/blogs',
-          method: 'POST',
-          body: {
-            title: 'Another Cypress title',
-            author: 'Another Cypress author',
-            url: 'Another Cypress url'
-          },
-          headers: {
-            'Authorization': `bearer ${JSON.parse(localStorage.getItem('loggedBloglistUser')).token}`
-          }
-        })
-        cy.visit('http://localhost:3000')
+        cy.createBlog({ 
+          title: 'Another Cypress Title', 
+          author: 'Another Cypress author',
+          url: 'Another Cypress url',
+          likes: 5
+         })
       })
 
       it('A blog can be liked', function() {
         cy.contains('View details').click()
         cy.contains('Like').click()
-        cy.contains('Likes: 1')
+        cy.contains('Likes: 6')
       })
 
       it('A blog can be deleted by the user who added it', function() {
