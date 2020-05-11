@@ -72,5 +72,36 @@ describe('Blog app', function() {
         cy.get('#blog').should('not.exist')
       })
     })
+
+    describe.only('Multiple blogs exist', function() {
+      beforeEach(function() {
+        cy.createBlog({ 
+          title: 'Worst Cypress Title', 
+          author: 'Another Cypress author',
+          url: 'Another Cypress url',
+          likes: 5
+         })
+         cy.createBlog({ 
+           title: 'Best Cypress Title', 
+           author: 'Another Cypress author',
+           url: 'Another Cypress url',
+           likes: 15
+          })
+        cy.createBlog({ 
+          title: 'Still another Cypress Title', 
+          author: 'Another Cypress author',
+          url: 'Another Cypress url',
+          likes: 10
+         })
+      })
+
+      it('Blogs are ordered by likes, descending', function() {
+        cy.get('[id="blog"]').then((blogs) => {
+          cy.wrap(blogs[0]).contains('Likes: 15')
+          cy.wrap(blogs[1]).contains('Likes: 10')
+          cy.wrap(blogs[2]).contains('Likes: 5')
+        })
+      })
+    })
   })
 })
