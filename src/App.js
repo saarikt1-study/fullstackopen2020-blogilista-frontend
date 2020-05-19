@@ -13,7 +13,6 @@ const App = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
-  // const [notificationMsg, setNotificationMsg] = useState(null)
   const dispatch = useDispatch()
   const notificationMsg = useSelector(state => state)
 
@@ -46,7 +45,6 @@ const App = () => {
       setUser(user)
       setUsername('')
       setPassword('')
-      console.log('Should show notification')
     } catch (exception) {
         dispatch(setNotification('ERROR: Wrong credentials'))
         setTimeout(() => {
@@ -119,11 +117,10 @@ const App = () => {
     const returnedBlog = await blogService.create(blogObject)
     setBlogs(blogs.concat(returnedBlog))
 
-    dispatch(setNotification(`${blogObject.title} added!`, 4))
-    // setNotificationMsg(`${blogObject.title} added!`)
-    // setTimeout(() => {
-    //   setNotificationMsg(null)
-    // }, 4000)
+    dispatch(setNotification(`${blogObject.title} added!`))
+    setTimeout(() => {
+      dispatch(setNotification(null))
+    }, 4000)
   }
 
   if (user === null) {
