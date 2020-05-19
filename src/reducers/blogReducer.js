@@ -20,12 +20,22 @@ const reducer = (state = [], action) => {
   }
 }
 
-export const INIT_BLOGS = () => {
+export const initBlogs = () => {
   return async dispatch => {
     const blogs = await blogService.getAll()
     dispatch({
       type: 'INIT_BLOGS',
       data: blogs
+    })
+  }
+}
+
+export const createBlog = (blog) => {
+  return async dispatch => {
+    const newBlog = await blogService.create(blog)
+    dispatch({
+      type: 'NEW_BLOG',
+      data: newBlog
     })
   }
 }
@@ -40,14 +50,5 @@ export const INIT_BLOGS = () => {
 //   }
 // }
 
-// export const createAnecdote = (content) => {
-//   return async dispatch => {
-//     const newAnecdote = await anecdoteService.createNew(content)
-//     dispatch({
-//       type: 'NEW_ANECDOTE',
-//       data: newAnecdote
-//     })
-//   }
-// }
 
 export default reducer

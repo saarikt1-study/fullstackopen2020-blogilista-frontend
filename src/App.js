@@ -6,20 +6,20 @@ import Notification from './components/Notification'
 import Togglable from './components/Togglable'
 import BlogForm from './components/BlogForm'
 import { setNotification } from './reducers/notificationReducer'
-import { INIT_BLOGS } from './reducers/blogReducer'
+import { initBlogs, createBlog } from './reducers/blogReducer'
 import { useSelector, useDispatch } from 'react-redux'
 
 const App = () => {
-  // const [blogs, setBlogs] = useState([])
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
+
   const dispatch = useDispatch()
   const notificationMsg = useSelector(state => state.notification)
   const blogs = useSelector(state => state.blogs)
 
   useEffect(() => {
-    dispatch(INIT_BLOGS())
+    dispatch(initBlogs())
   }, [])
 
   useEffect(() => {
@@ -114,7 +114,9 @@ const App = () => {
   const addBlog = async (blogObject) => {
     blogFormRef.current.toggleVisibility()
 
-    const returnedBlog = await blogService.create(blogObject)
+    dispatch(createBlog(blogObject))
+    
+    // const returnedBlog = await blogService.create(blogObject)
     // setBlogs(blogs.concat(returnedBlog))
 
     dispatch(setNotification(`${blogObject.title} added!`))
