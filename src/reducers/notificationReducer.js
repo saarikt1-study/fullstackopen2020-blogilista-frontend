@@ -10,8 +10,6 @@ const reducer = (state = initialState, action) => {
     }
 }
 
-let timer
-
 export const setNotification = (msg) => {
   console.log('Goes to the action creator')
   return {

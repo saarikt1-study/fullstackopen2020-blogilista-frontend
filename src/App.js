@@ -14,7 +14,7 @@ const App = () => {
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
   const dispatch = useDispatch()
-  const notificationMsg = useSelector(state => state)
+  const notificationMsg = useSelector(state => state.notification)
 
   useEffect(() => {
     blogService.getAll().then(blogs =>
