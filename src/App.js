@@ -6,20 +6,20 @@ import Notification from './components/Notification'
 import Togglable from './components/Togglable'
 import BlogForm from './components/BlogForm'
 import { setNotification } from './reducers/notificationReducer'
+import { INIT_BLOGS } from './reducers/blogReducer'
 import { useSelector, useDispatch } from 'react-redux'
 
 const App = () => {
-  const [blogs, setBlogs] = useState([])
+  // const [blogs, setBlogs] = useState([])
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
   const dispatch = useDispatch()
   const notificationMsg = useSelector(state => state.notification)
+  const blogs = useSelector(state => state.blogs)
 
   useEffect(() => {
-    blogService.getAll().then(blogs =>
-      setBlogs( blogs )
-    )
+    dispatch(INIT_BLOGS())
   }, [])
 
   useEffect(() => {
@@ -97,12 +97,12 @@ const App = () => {
     const updatedBlog = blogs.find(b => b.title === response.title)
 
     updatedBlog.likes = blogObject.likes
-    setBlogs(blogs.map(blog => blog.id === blogObject.id ?
-      updatedBlog : blog))
+    // setBlogs(blogs.map(blog => blog.id === blogObject.id ?
+    //   updatedBlog : blog))
   }
 
   const deleteBlog = async (id) => {
-    setBlogs(blogs.filter(b => b.id !== id))
+    // setBlogs(blogs.filter(b => b.id !== id))
     await blogService.deleteBlog(id)
     
     // const blog = blogs.find(b => b.id === id)
@@ -115,7 +115,7 @@ const App = () => {
     blogFormRef.current.toggleVisibility()
 
     const returnedBlog = await blogService.create(blogObject)
-    setBlogs(blogs.concat(returnedBlog))
+    // setBlogs(blogs.concat(returnedBlog))
 
     dispatch(setNotification(`${blogObject.title} added!`))
     setTimeout(() => {
