@@ -5,13 +5,17 @@ import loginService from './services/login'
 import Notification from './components/Notification'
 import Togglable from './components/Togglable'
 import BlogForm from './components/BlogForm'
+import { setNotification } from './reducers/notificationReducer'
+import { useSelector, useDispatch } from 'react-redux'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
-  const [notificationMsg, setNotificationMsg] = useState(null)
+  // const [notificationMsg, setNotificationMsg] = useState(null)
+  const dispatch = useDispatch()
+  const notificationMsg = useSelector(state => state)
 
   useEffect(() => {
     blogService.getAll().then(blogs =>
@@ -42,11 +46,12 @@ const App = () => {
       setUser(user)
       setUsername('')
       setPassword('')
+      console.log('Should show notification')
     } catch (exception) {
-      setNotificationMsg('ERROR: Wrong credentials')
-      setTimeout(() => {
-        setNotificationMsg(null)
-      }, 4000)
+        dispatch(setNotification('ERROR: Wrong credentials'))
+        setTimeout(() => {
+          dispatch(setNotification(null))
+        }, 4000)
     }
   }
 
@@ -114,10 +119,11 @@ const App = () => {
     const returnedBlog = await blogService.create(blogObject)
     setBlogs(blogs.concat(returnedBlog))
 
-    setNotificationMsg(`${blogObject.title} added!`)
-    setTimeout(() => {
-      setNotificationMsg(null)
-    }, 4000)
+    dispatch(setNotification(`${blogObject.title} added!`, 4))
+    // setNotificationMsg(`${blogObject.title} added!`)
+    // setTimeout(() => {
+    //   setNotificationMsg(null)
+    // }, 4000)
   }
 
   if (user === null) {
