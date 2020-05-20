@@ -8,7 +8,7 @@ import Togglable from './components/Togglable'
 import BlogForm from './components/BlogForm'
 import { setNotification } from './reducers/notificationReducer'
 import { initBlogs, createBlog } from './reducers/blogReducer'
-import { setUser } from './reducers/userReducer'
+import { setUser } from './reducers/loggedUserReducer'
 import { useSelector, useDispatch } from 'react-redux'
 import { initUsers } from './reducers/userListReducer'
 import {

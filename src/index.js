@@ -6,7 +6,7 @@ import thunk from 'redux-thunk'
 import { Provider } from 'react-redux'
 import notificationReducer from './reducers/notificationReducer'
 import blogReducer from './reducers/blogReducer'
-import userReducer from './reducers/userReducer'
+import userReducer from './reducers/loggedUserReducer'
 import userListReducer from './reducers/userListReducer'
 import { composeWithDevTools } from 'redux-devtools-extension'
 
