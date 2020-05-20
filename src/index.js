@@ -7,16 +7,19 @@ import { Provider } from 'react-redux'
 import notificationReducer from './reducers/notificationReducer'
 import blogReducer from './reducers/blogReducer'
 import userReducer from './reducers/userReducer'
+import userListReducer from './reducers/userListReducer'
+import { composeWithDevTools } from 'redux-devtools-extension'
 
 const reducer = combineReducers({
   blogs: blogReducer,
   notification: notificationReducer,
-  user: userReducer
+  user: userReducer,
+  userList: userListReducer
 })
 
 const store = createStore(
   reducer,
-  applyMiddleware(thunk)
+  composeWithDevTools(applyMiddleware(thunk))
 )
 
 ReactDOM.render(

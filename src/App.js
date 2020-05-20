@@ -10,6 +10,7 @@ import { setNotification } from './reducers/notificationReducer'
 import { initBlogs, createBlog } from './reducers/blogReducer'
 import { setUser } from './reducers/userReducer'
 import { useSelector, useDispatch } from 'react-redux'
+import { initUsers } from './reducers/userListReducer'
 import {
   BrowserRouter as Router,
   Switch, Route, Link
@@ -26,6 +27,7 @@ const App = () => {
 
   useEffect(() => {
     dispatch(initBlogs())
+    dispatch(initUsers())
   }, [dispatch])
 
   useEffect(() => {
@@ -125,7 +127,7 @@ const App = () => {
   return (
     <Router>
       <div>
-        <Link style={padding} to="/blogs">blogs</Link>
+        <Link style={padding} to="/">blogs</Link>
         <Link style={padding} to="/users">users</Link>
         {user.name} logged in
         <button onClick={handleLogout}>logout</button>
@@ -134,9 +136,12 @@ const App = () => {
       </div>
 
       <Switch>
-        <Route path="/blogs">
-        { blogForm() }
+        <Route path="/users">
+          <Users />
+        </Route>
+        <Route path="/">
         <h2>Blogs</h2>
+        { blogForm() }
         {blogs
           .sort((a, b) => {
             return b.likes - a.likes
@@ -148,9 +153,6 @@ const App = () => {
               loggedUserId={user.id}
             />
           )}
-        </Route>
-        <Route path="/users">
-          <Users />
         </Route>
       </Switch>
     </Router>

@@ -1,18 +1,30 @@
 import React from 'react'
-import axios from 'axios'
+import { useSelector } from 'react-redux'
 
 const Users = () => {
-
-  const getAll = () => {
-    const request = axios.get('/api/users')
-    console.log('asdfasdf', request.then(response => response.data))
-    // return request.then(response => response.data)
-  }
+  const users = useSelector(state => state.userList)
 
   return (
     <div>
-      Here resides the list of users
-      {getAll()}
+      <h2>Users</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Username</th>
+            <th>Number of blogs created</th>
+          </tr>
+        </thead>
+        <tbody>
+            {users.map(user => 
+            <tr key={user.id}>
+              <td>{user.name}</td>
+              <td>"{user.username}"</td>
+              <td>{user.blogs.length}</td>
+            </tr>
+            )}
+        </tbody>
+      </table>
     </div>
   )
 }
