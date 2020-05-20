@@ -9,6 +9,10 @@ import { setNotification } from './reducers/notificationReducer'
 import { initBlogs, createBlog } from './reducers/blogReducer'
 import { setUser } from './reducers/userReducer'
 import { useSelector, useDispatch } from 'react-redux'
+import {
+  BrowserRouter as Router,
+  Switch, Route, Link
+} from "react-router-dom"
 
 const App = () => {
   const [username, setUsername] = useState('')
@@ -103,6 +107,10 @@ const App = () => {
     }, 4000)
   }
 
+  const padding = {
+    padding: 5
+  }
+
   if (user === null) {
     return (
       <div>
@@ -114,25 +122,37 @@ const App = () => {
   }
 
   return (
-    <div>
-      <Notification message={notificationMsg}/>
-      <h1>List of Blogs</h1>
-      <p>{user.name} logged in</p>
-      <button onClick={handleLogout}>logout</button>
-      { blogForm() }
-      <h2>Blogs</h2>
-      {blogs
-        .sort((a, b) => {
-          return b.likes - a.likes
-        })
-        .map(blog =>
-          <Blog
-            key={blog.id}
-            blog={blog}
-            loggedUserId={user.id}
-          />
-        )}
-    </div>
+    <Router>
+      <div>
+        <Link style={padding} to="/blogs">blogs</Link>
+        <Link style={padding} to="/users">users</Link>
+        {user.name} logged in
+        <button onClick={handleLogout}>logout</button>
+        <Notification message={notificationMsg}/>
+        <h1>Blog App</h1>
+      </div>
+
+      <Switch>
+        <Route path="/blogs">
+        { blogForm() }
+        <h2>Blogs</h2>
+        {blogs
+          .sort((a, b) => {
+            return b.likes - a.likes
+          })
+          .map(blog =>
+            <Blog
+              key={blog.id}
+              blog={blog}
+              loggedUserId={user.id}
+            />
+          )}
+        </Route>
+        <Route path="/users">
+          {/* <Users /> */}
+        </Route>
+      </Switch>
+    </Router>
   )
 }
 
