@@ -6,6 +6,7 @@ import loginService from './services/login'
 import Notification from './components/Notification'
 import Togglable from './components/Togglable'
 import BlogForm from './components/BlogForm'
+import User from './components/User'
 import { setNotification } from './reducers/notificationReducer'
 import { initBlogs, createBlog } from './reducers/blogReducer'
 import { setUser } from './reducers/loggedUserReducer'
@@ -136,6 +137,9 @@ const App = () => {
       </div>
 
       <Switch>
+        <Route path="/users/:id">
+          <User />
+        </Route>
         <Route path="/users">
           <Users />
         </Route>
