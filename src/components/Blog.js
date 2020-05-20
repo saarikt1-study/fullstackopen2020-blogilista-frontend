@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { updateBlog } from '../reducers/blogReducer'
+import { updateBlog, deleteBlog } from '../reducers/blogReducer'
 import { useDispatch } from 'react-redux'
 
 const blogStyle = {
@@ -14,7 +14,7 @@ const blogStyle = {
   marginRight: 20
 }
 
-const Blog = ({ blog, deleteBlog, loggedUserId }) => {
+const Blog = ({ blog, loggedUserId }) => {
   const [visible, setVisibility] = useState(false)
 
   const detailsVisible = { display: visible ? '' : 'none' }
@@ -48,7 +48,7 @@ const Blog = ({ blog, deleteBlog, loggedUserId }) => {
         <button onClick={handleClick}>Like</button>
         <br />
         {blog.user && blog.user.name}
-        {createdByLoggedUser && <button onClick={() => deleteBlog(blog.id)}>Delete blog</button>}
+        {createdByLoggedUser && <button onClick={() => dispatch(deleteBlog(blog.id))}>Delete blog</button>}
       </div>
     </div>
   )

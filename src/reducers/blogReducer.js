@@ -10,6 +10,8 @@ const reducer = (state = [], action) => {
       return state.map(blog =>
         blog.id !== updatedBlog.id ? blog : updatedBlog
       )
+    case 'DELETE_BLOG':
+      return state.filter(blog => blog.id !== action.data)
     case 'NEW_BLOG':
       return [...state, action.data]
     case 'INIT_BLOGS':
@@ -49,15 +51,14 @@ export const updateBlog = (newBlog) => {
   }
 }
 
-// export const voteForAnecdote = (id, newObject) => {
-//   return async dispatch => {
-//     await anecdoteService.update(id, newObject)
-//     dispatch({
-//       type: 'VOTE',
-//       data: { id, newObject }
-//     })
-//   }
-// }
-
+export const deleteBlog = (id) => {
+  return async dispatch => {
+      await blogService.deleteBlog(id)
+    dispatch({
+      type: 'DELETE_BLOG',
+      data: id
+    })
+  }
+}
 
 export default reducer

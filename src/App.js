@@ -92,16 +92,6 @@ const App = () => {
     </Togglable>
   )
 
-  const deleteBlog = async (id) => {
-    // setBlogs(blogs.filter(b => b.id !== id))
-    await blogService.deleteBlog(id)
-    
-    // const blog = blogs.find(b => b.id === id)
-    // if (window.confirm(`Are you sure you want to delete ${blog.title}?`)) {
-    //   await blogService.deleteBlog(id)
-    // }
-  }
-
   const addBlog = async (blogObject) => {
     blogFormRef.current.toggleVisibility()
 
@@ -138,7 +128,6 @@ const App = () => {
           <Blog
             key={blog.id}
             blog={blog}
-            deleteBlog={deleteBlog}
             loggedUserId={user.id}
           />
         )}
