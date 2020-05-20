@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import Blog from './components/Blog'
+import Users from './components/Users'
 import blogService from './services/blogs'
 import loginService from './services/login'
 import Notification from './components/Notification'
@@ -149,7 +150,7 @@ const App = () => {
           )}
         </Route>
         <Route path="/users">
-          {/* <Users /> */}
+          <Users />
         </Route>
       </Switch>
     </Router>
