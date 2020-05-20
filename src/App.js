@@ -92,15 +92,6 @@ const App = () => {
     </Togglable>
   )
 
-  const updateBlog = async (id, blogObject) => {
-    const response = await blogService.update(id, blogObject)
-    const updatedBlog = blogs.find(b => b.title === response.title)
-
-    updatedBlog.likes = blogObject.likes
-    // setBlogs(blogs.map(blog => blog.id === blogObject.id ?
-    //   updatedBlog : blog))
-  }
-
   const deleteBlog = async (id) => {
     // setBlogs(blogs.filter(b => b.id !== id))
     await blogService.deleteBlog(id)
@@ -115,10 +106,6 @@ const App = () => {
     blogFormRef.current.toggleVisibility()
 
     dispatch(createBlog(blogObject))
-    
-    // const returnedBlog = await blogService.create(blogObject)
-    // setBlogs(blogs.concat(returnedBlog))
-
     dispatch(setNotification(`${blogObject.title} added!`))
     setTimeout(() => {
       dispatch(setNotification(null))
@@ -151,7 +138,6 @@ const App = () => {
           <Blog
             key={blog.id}
             blog={blog}
-            updateBlog={updateBlog}
             deleteBlog={deleteBlog}
             loggedUserId={user.id}
           />
