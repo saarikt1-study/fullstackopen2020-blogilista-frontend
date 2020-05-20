@@ -23,12 +23,13 @@ const Blog = ({ blog, deleteBlog, loggedUserId }) => {
   const dispatch = useDispatch()
 
   const handleClick = () => {
-    dispatch(updateBlog(blog.id, {
+    dispatch(updateBlog({
       user: blog.user && blog.user.id,
       title: blog.title,
       author: blog.author,
       likes: blog.likes + 1,
-      url: blog.url
+      url: blog.url,
+      id: blog.id
     }))
   }
 
