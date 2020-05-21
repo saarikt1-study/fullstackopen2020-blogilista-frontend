@@ -32,6 +32,7 @@ export const initBlogs = () => {
     })
   }
 }
+// When posting the comment, should provide the blog id and the comment somehow...
 
 export const createBlog = (blog) => {
   return async dispatch => {

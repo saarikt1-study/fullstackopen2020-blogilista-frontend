@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import { updateBlog } from '../reducers/blogReducer'
-import { useDispatch } from 'react-redux'
+// import { updateBlog } from '../reducers/blogReducer'
+// import { useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
 
 const blogStyle = {
