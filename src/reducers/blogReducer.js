@@ -4,9 +4,11 @@ const reducer = (state = [], action) => {
   // console.log('state now: ', state)
   // console.log('action', action)
 
+
   switch(action.type) {
     case 'LIKE':
       const updatedBlog = action.data
+      console.log('This is the updated data: ', updatedBlog)
       return state.map(blog =>
         blog.id !== updatedBlog.id ? blog : updatedBlog
       )
@@ -43,10 +45,10 @@ export const createBlog = (blog) => {
 
 export const updateBlog = (newBlog) => {
   return async dispatch => {
-    const updatedBlog = await blogService.update(newBlog.id, newBlog)
+    await blogService.update(newBlog.id, newBlog)
     dispatch({
       type: 'LIKE',
-      data: updatedBlog
+      data: newBlog
     })
   }
 }

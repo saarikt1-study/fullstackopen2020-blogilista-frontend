@@ -14,7 +14,7 @@ const reducer = combineReducers({
   blogs: blogReducer,
   notification: notificationReducer,
   user: userReducer,
-  userList: userListReducer
+  userList: userListReducer 
 })
 
 const store = createStore(
