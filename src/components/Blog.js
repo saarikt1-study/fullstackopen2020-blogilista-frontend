@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { updateBlog, deleteBlog } from '../reducers/blogReducer'
 import { useDispatch } from 'react-redux'
+import { Link } from 'react-router-dom'
 
 const blogStyle = {
   paddingTop: 10,
@@ -39,7 +40,9 @@ const Blog = ({ blog, loggedUserId }) => {
 
   return (
     <div id='blog' style={blogStyle}>
-      {blog.title} by {blog.author}
+      <Link to={`/blogs/${blog.id}`}>
+        {blog.title} by {blog.author}
+      </Link>
       <button onClick={() => setVisibility(!visible)}>{buttonLabel}</button>
       <div style={detailsVisible} className='blogDetails'>
         {blog.url}
