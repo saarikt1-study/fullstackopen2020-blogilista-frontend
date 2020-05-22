@@ -1,4 +1,22 @@
 import React, { useState } from 'react'
+import styled from 'styled-components'
+
+const Button = styled.button`
+  box-shadow: 0px 1px 0px 0px #1c1b18;
+  background:linear-gradient(to bottom, #eae0c2 5%, #ccc2a6 100%);
+  background-color:#eae0c2;
+  border-radius:15px;
+  border:2px solid #333029;
+  display:inline-block;
+  cursor:pointer;
+  color:#505739;
+  font-family:Arial;
+  font-size:14px;
+  font-weight:bold;
+  padding:12px 16px;
+  text-decoration:none;
+  text-shadow:0px 1px 0px #ffffff;
+`
 
 const BlogForm = ({ createBlog }) => {
   const [newTitle, setTitle] = useState('')
@@ -56,7 +74,7 @@ const BlogForm = ({ createBlog }) => {
           onChange={handleUrlChange}
         />
         <br />
-        <button type='submit'>create</button>
+        <Button type='submit'>create</Button>
       </form>
     </>
   )

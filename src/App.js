@@ -13,10 +13,16 @@ import { initBlogs, createBlog } from './reducers/blogReducer'
 import { setUser } from './reducers/loggedUserReducer'
 import { useSelector, useDispatch } from 'react-redux'
 import { initUsers } from './reducers/userListReducer'
+import styled from 'styled-components'
 import {
   BrowserRouter as Router,
   Switch, Route, Link
 } from "react-router-dom"
+
+const NavigationBar = styled.div`
+  background: #e9c46a;
+  padding: 10px;
+`
 
 const App = () => {
   const [username, setUsername] = useState('')
@@ -128,14 +134,13 @@ const App = () => {
 
   return (
     <Router>
-      <div>
+      <NavigationBar>
         <Link style={padding} to="/">blogs</Link>
         <Link style={padding} to="/users">users</Link>
         {user.name} logged in
         <button onClick={handleLogout}>logout</button>
         <Notification message={notificationMsg}/>
-        <h1>Blog App</h1>
-      </div>
+      </NavigationBar>
 
       <Switch>
         <Route path="/users/:id">
@@ -148,6 +153,7 @@ const App = () => {
           <Users />
         </Route>
         <Route path="/">
+        <h1>Blog App</h1>
         <h2>Blogs</h2>
         { blogForm() }
         {blogs

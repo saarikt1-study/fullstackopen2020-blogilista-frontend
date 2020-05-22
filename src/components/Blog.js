@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
-// import { updateBlog } from '../reducers/blogReducer'
-// import { useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
+import styled from 'styled-components'
 
 const blogStyle = {
   paddingTop: 10,
@@ -15,18 +14,25 @@ const blogStyle = {
   marginRight: 20
 }
 
+const BlogListItem = styled.div`
+  padding: 10px;
+  margin: 0px 10px 10px 0px;
+  border: 1px solid gray;
+`
+
+
 const Blog = ({ blog }) => {
 
   // const blogCreatorId = blog.user && blog.user.id
   // const createdByLoggedUser = loggedUserId === blogCreatorId
 
   return (
-    <div id='blog' style={blogStyle}>
+    <BlogListItem>
       <Link to={`/blogs/${blog.id}`}>
         {blog.title} by {blog.author}
       </Link>
       {/* {createdByLoggedUser && <button onClick={() => dispatch(deleteBlog(blog.id))}>Delete blog</button>} */}
-    </div>
+    </BlogListItem>
   )
 }
 
