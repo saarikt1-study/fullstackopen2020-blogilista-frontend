@@ -6,9 +6,8 @@ const reducer = (state = [], action) => {
 
 
   switch(action.type) {
-    case 'LIKE':
+    case 'UPDATE_BLOG':
       const updatedBlog = action.data
-      console.log('This is the updated data: ', updatedBlog)
       return state.map(blog =>
         blog.id !== updatedBlog.id ? blog : updatedBlog
       )
@@ -32,7 +31,6 @@ export const initBlogs = () => {
     })
   }
 }
-// When posting the comment, should provide the blog id and the comment somehow...
 
 export const createBlog = (blog) => {
   return async dispatch => {
@@ -44,11 +42,21 @@ export const createBlog = (blog) => {
   }
 }
 
+export const createComment = (blog) => {
+  return async dispatch => {
+    await blogService.createComment(blog)
+    dispatch({
+      type: 'UPDATE_BLOG',
+      data: blog
+    })
+  }
+}
+
 export const updateBlog = (newBlog) => {
   return async dispatch => {
     await blogService.update(newBlog.id, newBlog)
     dispatch({
-      type: 'LIKE',
+      type: 'UPDATE_BLOG',
       data: newBlog
     })
   }

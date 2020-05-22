@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { useSelector } from 'react-redux'
-import { updateBlog } from '../reducers/blogReducer'
+import { updateBlog, createComment } from '../reducers/blogReducer'
 import { useDispatch } from 'react-redux'
 
 const BlogDetails = () => {
+  const [comment, setComment] = useState('')
   const blogs = useSelector(state => state.blogs)
   const id = useParams().id
   const blog = blogs.find(blog => blog.id === id)
@@ -22,6 +23,17 @@ const BlogDetails = () => {
       }))
   }
 
+  const addComment = () => {
+    dispatch(createComment({
+      ...blog,
+      comments: blog.comments.concat({
+        content: comment,
+        id: blog.id
+      })
+    }))
+    setComment('')
+  }
+
   if (!blog) {
     return null
   }
@@ -37,16 +49,23 @@ const BlogDetails = () => {
       {blog.user &&
         <p>Added by {blog.user.name}</p>
       }
-      {blog.comments[0] &&
-        <div>
-          <h3>Comments:</h3>
-          <ul>
-            {blog.comments.map(comment => 
-              <li key={comment.id} >{comment.content}</li>
-              )}
-          </ul>
-        </div>
-      }
+      <div>
+        <h3>Comments:</h3>
+        <input 
+          value={comment}
+          onChange={e => {
+            setComment(e.target.value)
+          }}
+        />
+        <button onClick={addComment}>
+          Add comment
+        </button>
+        <ul>
+          {blog.comments.map(comment => 
+            <li key={comment.id} >{comment.content}</li>
+            )}
+        </ul>
+      </div>
     </div>
   )
 }
